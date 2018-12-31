@@ -1,8 +1,21 @@
 version: '3.4'
 services:
-  postgres: 
+  postgres:
     image: postgres:10.5-alpine
-    user: $CURRENT_USER
+    restart: always
     ports:
-     - "65432:5432"
-    
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=darknamer
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=identity
+  pgadmin:
+    image: dpage/pgadmin4:3.6
+    depends_on:
+      - postgres
+    restart: always
+    ports:
+      - "5433:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=darknamer@gmail.com
+      - "PGADMIN_DEFAULT_PASSWORD=P@ssw0rd"
